@@ -80,7 +80,7 @@ const StylishHeroSection: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
                     <Image
-                      src="/placeholder.svg?height=48&width=48"
+                      src="/images/home/teacher?height=48&width=48"
                       alt="AI Tutor"
                       width={48}
                       height={48}

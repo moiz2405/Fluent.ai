@@ -1,28 +1,22 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { Search } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
 // Auth0 hook
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 const Navbar: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+//   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const pathname = usePathname();
+//   const pathname = usePathname();
 
   // Auth0 context using the useUser hook
-  const { user, error, isLoading } = useUser();
+  const { user } = useUser();
 
   // Handle scroll state
   useEffect(() => {
@@ -34,11 +28,11 @@ const Navbar: React.FC = () => {
   }, []);
 
   // Handle search form submission
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Search for:', searchQuery);
-    // Implement search functionality here
-  };
+//   const handleSearch = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     console.log('Search for:', searchQuery);
+//     // Implement search functionality here
+//   };
 
   return (
     <nav
@@ -50,7 +44,7 @@ const Navbar: React.FC = () => {
           {/* Logo and Title */}
           <Link href="/" className="flex items-center space-x-2" aria-label="Homepage">
             <Image
-              src="/images/home/logo.png"
+              src="/images/home/logo-1.png"
               alt="Fluent.ai Logo"
               width={32}
               height={32}
@@ -64,20 +58,6 @@ const Navbar: React.FC = () => {
             {/* Add your nav links here */}
           </NavigationMenu>
 
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="hidden md:flex items-center max-w-sm mx-4 flex-1 bg-white p-2 rounded-lg shadow-md">
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Search products"
-            />
-            <Button type="submit" size="icon" variant="ghost" className="ml-2" aria-label="Submit search">
-              <Search className="h-4 w-4" />
-            </Button>
-          </form>
 
           {/* Login/Logout Button and User Icon (based on Auth0 status) */}
           <div className="flex items-center space-x-4">

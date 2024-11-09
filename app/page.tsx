@@ -1,10 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import ChatBox from "@/components/home/chatbox";
 import HeroSection from "@/components/home/herosection";
-// import Check from "@/components/home/check";
-import LoadingScreen from "@/components/home/loadingScreen";
+import LoadingScreen from "@/components/home/LoadingScreen";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);

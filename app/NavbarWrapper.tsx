@@ -24,7 +24,7 @@ const NavbarWrapper: React.FC = () => {
   return (
     <>
       {/* Pass the ref to the Navbar */}
-      <Navbar ref={navbarRef} />
+      <Navbar  />
 
       {/* Apply paddingTop dynamically based on navbar height */}
       <div style={{ paddingTop: `${navHeight}px` }}></div>
