@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true, // Optional: enables React strict mode
@@ -14,9 +14,14 @@ const nextConfig: NextConfig = {
     AUTH0_POST_LOGOUT_REDIRECT_URI: process.env.AUTH0_POST_LOGOUT_REDIRECT_URI,
   },
 
-  // If you are using image optimization, specify the domains where images are hosted
+  // Specify the domains where images are hosted
   images: {
-    domains: ['example.com', 'anotherdomain.com', 'lh3.googleusercontent.com'], // Add Google profile image domain here
+    domains: [
+      'example.com',
+      'anotherdomain.com',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com', // Add GitHub avatar domain here
+    ],
   },
 
   // Enable custom Webpack configuration, if needed
@@ -24,6 +29,6 @@ const nextConfig: NextConfig = {
     // Custom Webpack configuration (e.g., for server-side rendering optimizations)
     return config;
   },
-}
+};
 
 export default nextConfig;
