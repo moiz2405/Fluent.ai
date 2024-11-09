@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Navbar from '../components/common/Navbar'; // Corrected path
 
 const NavbarWrapper: React.FC = () => {
   const [navHeight, setNavHeight] = useState<number>(0);
+  const navbarRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const updateNavHeight = () => {
-      const navbar = document.querySelector<HTMLElement>('.navbar');
-      if (navbar) {
-        setNavHeight(navbar.offsetHeight);
+      if (navbarRef.current) {
+        setNavHeight(navbarRef.current.offsetHeight);
       }
     };
 
@@ -23,7 +23,10 @@ const NavbarWrapper: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      {/* Pass the ref to the Navbar */}
+      <Navbar ref={navbarRef} />
+
+      {/* Apply paddingTop dynamically based on navbar height */}
       <div style={{ paddingTop: `${navHeight}px` }}></div>
     </>
   );

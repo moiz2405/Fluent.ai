@@ -21,6 +21,7 @@ export default function RootLayout({
       </head>
       <body>
         <UserProvider>
+
           <NavbarWrapper />
           {/* The children will render here */}
           {children}

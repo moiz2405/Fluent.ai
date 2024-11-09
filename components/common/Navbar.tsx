@@ -1,67 +1,51 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import Image from 'next/image'
-import { Search, Menu, ShoppingCart } from 'lucide-react'
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+"use client";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { Search } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+} from "@/components/ui/navigation-menu";
 
-const navLinks = [
-  { path: '/product', name: 'Products' },
-  { path: '/user', name: 'User' },
-  { path: '/checkout', name: 'Checkout' },
-  { path: '/admin', name: 'Admin' },
-  { path: '/api/auth/login', name: 'Login' },
-  { path: '/auth/register', name: 'Register' },
-]
+// Auth0 hook
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 const Navbar: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('')
-  const [isScrolled, setIsScrolled] = useState<boolean>(false)
-  const pathname = usePathname()
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  // Auth0 context using the useUser hook
+  const { user, error, isLoading } = useUser();
 
   // Handle scroll state
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Handle search form submission
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Search for:', searchQuery)
+    e.preventDefault();
+    console.log('Search for:', searchQuery);
     // Implement search functionality here
-  }
+  };
 
   return (
     <nav
-      className={cn(
-        "fixed w-full top-0 left-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/80 backdrop-blur-md shadow-md" : "bg-transparent"
-      )}
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'}`}
       aria-label="Main navigation"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Title */}
           <Link href="/" className="flex items-center space-x-2" aria-label="Homepage">
@@ -72,34 +56,16 @@ const Navbar: React.FC = () => {
               height={32}
               className="rounded-lg"
             />
-            <span className="text-lg font-bold">Fluent.ai</span>
+            <span className="text-lg font-bold text-black">Fluent.ai</span>
           </Link>
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList>
-              {navLinks.map((item) => (
-                <NavigationMenuItem key={item.name}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={item.path}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "text-sm font-medium transition-colors hover:text-primary",
-                        pathname === item.path ? "text-primary" : "text-muted-foreground"
-                      )}
-                      aria-current={pathname === item.path ? 'page' : undefined}
-                    >
-                      {item.name}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
+            {/* Add your nav links here */}
           </NavigationMenu>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="hidden md:flex items-center max-w-sm mx-4 flex-1">
+          <form onSubmit={handleSearch} className="hidden md:flex items-center max-w-sm mx-4 flex-1 bg-white p-2 rounded-lg shadow-md">
             <Input
               type="search"
               placeholder="Search..."
@@ -110,65 +76,38 @@ const Navbar: React.FC = () => {
             />
             <Button type="submit" size="icon" variant="ghost" className="ml-2" aria-label="Submit search">
               <Search className="h-4 w-4" />
-              <span className="sr-only">Search</span>
             </Button>
           </form>
 
-          {/* Cart Button */}
-          <Button variant="ghost" size="icon" className="hidden md:flex" aria-label="Shopping Cart">
-            <ShoppingCart className="h-5 w-5" />
-            <span className="sr-only">Shopping Cart</span>
-          </Button>
-
-          {/* Mobile Menu */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open mobile menu">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <nav className="flex flex-col space-y-4 mt-4">
-                {navLinks.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.path}
-                    className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary",
-                      pathname === item.path ? "text-primary" : "text-muted-foreground"
-                    )}
-                    aria-current={pathname === item.path ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
-              <div className="mt-4">
-                <form onSubmit={handleSearch} className="flex items-center">
-                  <Input
-                    type="search"
-                    placeholder="Search..."
-                    className="w-full"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    aria-label="Search products"
+          {/* Login/Logout Button and User Icon (based on Auth0 status) */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                {/* User Icon (Profile Picture from Google) */}
+                <Link href="users/profile">
+                  <Image
+                    src={user.picture || '/images/default-avatar.png'} // Fallback to default avatar if no picture is available
+                    alt="User Profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full border-2 border-gray-300"
                   />
-                  <Button type="submit" size="icon" variant="ghost" className="ml-2" aria-label="Submit search">
-                    <Search className="h-4 w-4" />
-                    <span className="sr-only">Search</span>
-                  </Button>
-                </form>
-              </div>
-            </SheetContent>
-          </Sheet>
+                </Link>
+                {/* Logout Button */}
+                <Button onClick={() => window.location.href = "/api/auth/logout"} className="ml-4">
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button onClick={() => window.location.href = "/api/auth/login"} className="ml-4">
+                Login
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
