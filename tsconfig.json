@@ -1,34 +1,42 @@
 {
-    "compilerOptions": {
-      "jsx": "react-jsx", // Ensure this is set correctly
-      "target": "ES2017",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "noEmit": true,
-      "esModuleInterop": true,
-      "module": "esnext",
-      "moduleResolution": "bundler",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "incremental": true,
-      "plugins": [
-        {
-          "name": "next"
-        }
-      ],
-      "paths": {
-        "@/*": ["./*"]
-      }
-    },
-    "include": [
-      "next-env.d.ts",
-      "**/*.ts",
-      "**/*.tsx",
-      ".next/types/**/*.ts",
-      "app/users/login/page.tsx",
-      "app/api/auth/route.js"
+  "compilerOptions": {
+    "jsx": "preserve", // Ensure this is set correctly
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "exclude": ["node_modules"]
-  }
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/users/login/page.tsx",
+    "app/api/auth/[auth0]/route.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

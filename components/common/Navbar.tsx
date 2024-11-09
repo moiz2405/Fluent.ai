@@ -28,7 +28,7 @@ const navLinks = [
   { path: '/user', name: 'User' },
   { path: '/checkout', name: 'Checkout' },
   { path: '/admin', name: 'Admin' },
-  { path: '/auth/login', name: 'Login' },
+  { path: '/api/auth/login', name: 'Login' },
   { path: '/auth/register', name: 'Register' },
 ]
 
