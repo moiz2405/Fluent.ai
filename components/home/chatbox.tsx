@@ -27,7 +27,7 @@ export default function Component() {
 //   const [selectedVoice] = useState<string>('Google UK English Female')
   const [isVoiceMenuOpen, setIsVoiceMenuOpen] = useState(false)
   const scrollAreaRef = useRef(null)
-  const [isTyping, setIsTyping] = useState(false);
+  
 
 
   const handleSend = async () => {
