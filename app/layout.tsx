@@ -1,21 +1,18 @@
-import type { Metadata } from "next";
+import { ReactNode } from "react"; // Add this import to handle children type
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-
+import NavbarWrapper from "./NavbarWrapper";
 import "../styles/globals.css";
 
-
-import NavbarWrapper from "./NavbarWrapper";
-
-export const metadata: Metadata = {
+export const metadata = {
   title: "FluentAI",
   description: "Your Personalized AI English Tutor",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: ReactNode;  // Ensure children is typed correctly
+}) {
   return (
     <html lang="en">
       <head>
@@ -23,10 +20,7 @@ export default function RootLayout({
       </head>
       <body>
         <UserProvider>
-          <NavbarWrapper/>
-            {/* The children will render here */}
-            {children}
-
+          <NavbarWrapper>{children}</NavbarWrapper>  {/* Pass children here */}
         </UserProvider>
       </body>
     </html>

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import ChatBox from "@/components/home/chatbox";
+// import ChatBox from "@/components/home/chatbox";
 import HeroSection from "@/components/home/herosection";
 import LoadingScreen from "@/components/home/LoadingScreen";
 
@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <ChatBox />
+      {/* <ChatBox /> */}
       {/* <Check/> */}
     </>
   );

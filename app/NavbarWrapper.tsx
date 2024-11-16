@@ -1,9 +1,12 @@
-'use client';
+"use client";
+import React, { useState, useEffect, useRef } from 'react';
+import Navbar from '../components/common/Navbar';
 
-import { useEffect, useState, useRef } from 'react';
-import Navbar from '../components/common/Navbar'; // Corrected path
+interface NavbarWrapperProps {
+  children: React.ReactNode; // Declare children as a required prop
+}
 
-const NavbarWrapper: React.FC = () => {
+const NavbarWrapper: React.FC<NavbarWrapperProps> = ({ children }) => {
   const [navHeight, setNavHeight] = useState<number>(0);
   const navbarRef = useRef<HTMLElement | null>(null);
 
@@ -15,19 +18,20 @@ const NavbarWrapper: React.FC = () => {
     };
 
     updateNavHeight(); // Set initial height
-
-    // Update height on resize
     window.addEventListener('resize', updateNavHeight);
     return () => window.removeEventListener('resize', updateNavHeight);
   }, []);
 
   return (
     <>
-      {/* Pass the ref to the Navbar */}
-      <Navbar  />
+      {/* Navbar with a ref */}
+      <Navbar ref={navbarRef} />
 
-      {/* Apply paddingTop dynamically based on navbar height */}
-      <div style={{ paddingTop: `${navHeight}px` }}></div>
+      {/* Wrapper div to add dynamic spacing */}
+      <div style={{ paddingTop: `${navHeight}px` }}>
+        {/* Main content will now start below the navbar */}
+        {children}
+      </div>
     </>
   );
 };
