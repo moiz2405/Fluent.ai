@@ -3,22 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-} from "@/components/ui/navigation-menu";
-
-// Auth0 hook
+import { NavigationMenu } from "@/components/ui/navigation-menu";
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-const Navbar: React.FC = () => {
-//   const [searchQuery, setSearchQuery] = useState<string>('');
+const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((props, ref) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-//   const pathname = usePathname();
-
-  // Auth0 context using the useUser hook
   const { user } = useUser();
 
-  // Handle scroll state
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -27,16 +18,14 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle search form submission
-//   const handleSearch = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     console.log('Search for:', searchQuery);
-//     // Implement search functionality here
-//   };
-
   return (
     <nav
-      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'}`}
+      ref={ref} // Attach the ref to the <nav> element
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/90 backdrop-blur-md shadow-md' // Transparent background with blur when scrolled
+          : 'bg-gradient-to-r from-purple-500 via-blue-500 to-purple-700 backdrop-blur-sm'
+      }`}
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-4 py-2">
@@ -50,7 +39,7 @@ const Navbar: React.FC = () => {
               height={32}
               className="rounded-lg"
             />
-            <span className="text-lg font-bold text-black">Fluent.ai</span>
+            <span className="text-lg font-bold text-white">Fluent.ai</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -58,13 +47,12 @@ const Navbar: React.FC = () => {
             {/* Add your nav links here */}
           </NavigationMenu>
 
-
           {/* Login/Logout Button and User Icon (based on Auth0 status) */}
           <div className="flex items-center space-x-4">
             {user ? (
               <>
                 {/* User Icon (Profile Picture from Google) */}
-                <Link href="users/profile">
+                <Link href="/users/profile">
                   <Image
                     src={user.picture || '/images/default-avatar.png'} // Fallback to default avatar if no picture is available
                     alt="User Profile"
@@ -88,6 +76,8 @@ const Navbar: React.FC = () => {
       </div>
     </nav>
   );
-};
+});
+
+Navbar.displayName = "Navbar"; // Set displayName for the component (optional, but good for debugging)
 
 export default Navbar;

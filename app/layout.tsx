@@ -1,7 +1,7 @@
 import { ReactNode } from "react"; // Add this import to handle children type
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import NavbarWrapper from "./NavbarWrapper";
-import "../styles/globals.css";
+import "./globals.css";
 
 export const metadata = {
   title: "FluentAI",

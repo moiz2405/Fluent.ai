@@ -2,12 +2,15 @@
 
 import React from 'react'
 import Image from "next/image"
+import { useRouter } from "next/navigation" // Import useRouter hook
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BookOpen, Globe, MessageCircle, Sparkles } from "lucide-react"
 import { motion } from "framer-motion"
 
 const StylishHeroSection: React.FC = () => {
+  const router = useRouter() // Initialize the router
+
   const features = [
     { icon: BookOpen, text: "Personalized Lessons" },
     { icon: Globe, text: "24/7 Availability" },
@@ -75,7 +78,10 @@ const StylishHeroSection: React.FC = () => {
             transition={{ delay: 1, duration: 0.5 }}
             className="flex items-center justify-center"
           >
-            <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm shadow-xl">
+            <Card
+              className="w-full max-w-md bg-white/80 backdrop-blur-sm shadow-xl cursor-pointer"
+              onClick={() => router.push('/tutor')} // Add onClick handler
+            >
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
