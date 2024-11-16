@@ -21,10 +21,10 @@ export default function RootLayout({
       </head>
       <body>
         <UserProvider>
-          <NavbarWrapper>
+          <NavbarWrapper/>
             {/* The children will render here */}
             {children}
-          </NavbarWrapper>
+
         </UserProvider>
       </body>
     </html>
