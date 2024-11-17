@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+   /* Matches the height of the nav */
 }
 nav {
     position: fixed;
@@ -11,8 +12,8 @@ nav {
     left: 0;
     right: 0;
     z-index: 50;
-    height: 64px; /* Define a consistent height */
-    background-color: rgba(255, 255, 255, 0.9); /* Example: semi-transparent background */
+    height: 64px;
+   background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
   }
 

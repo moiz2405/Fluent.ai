@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((props, ref) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -14,17 +14,15 @@ const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((pr
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      ref={ref} // Attach the ref to the <nav> element
-      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-md' // Transparent background with blur when scrolled
-          : 'bg-gradient-to-r from-purple-500 via-blue-500 to-purple-700 backdrop-blur-sm'
+      ref={ref}
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-gray-800/70 backdrop-blur-md ${
+        isScrolled ? "shadow-md" : ""
       }`}
       aria-label="Main navigation"
     >
@@ -54,7 +52,7 @@ const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((pr
                 {/* User Icon (Profile Picture from Google) */}
                 <Link href="/users/profile">
                   <Image
-                    src={user.picture || '/images/default-avatar.png'} // Fallback to default avatar if no picture is available
+                    src={user.picture || "/images/default-avatar.png"}
                     alt="User Profile"
                     width={32}
                     height={32}
@@ -62,12 +60,12 @@ const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((pr
                   />
                 </Link>
                 {/* Logout Button */}
-                <Button onClick={() => window.location.href = "/api/auth/logout"} className="ml-4">
+                <Button onClick={() => (window.location.href = "/api/auth/logout")} className="ml-4">
                   Logout
                 </Button>
               </>
             ) : (
-              <Button onClick={() => window.location.href = "/api/auth/login"} className="ml-4">
+              <Button onClick={() => (window.location.href = "/api/auth/login")} className="ml-4">
                 Login
               </Button>
             )}
@@ -78,6 +76,6 @@ const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((pr
   );
 });
 
-Navbar.displayName = "Navbar"; // Set displayName for the component (optional, but good for debugging)
+Navbar.displayName = "Navbar";
 
 export default Navbar;

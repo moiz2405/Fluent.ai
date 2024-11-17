@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const LoadingScreen: React.FC = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 relative">
+    <div className="flex items-center justify-center h-[calc(100vh-64px)] bg-gradient-to-br from-blue-500 to-purple-600 relative">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

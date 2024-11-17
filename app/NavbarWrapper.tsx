@@ -23,16 +23,16 @@ const NavbarWrapper: React.FC<NavbarWrapperProps> = ({ children }) => {
   }, []);
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Navbar with a ref */}
       <Navbar ref={navbarRef} />
 
-      {/* Wrapper div to add dynamic spacing */}
-      <div style={{ paddingTop: `${navHeight}px` }}>
+      {/* Content wrapper that will take the remaining space */}
+      <div style={{ flex: 1, paddingTop: `${navHeight}px`, overflowY: 'auto' }}>
         {/* Main content will now start below the navbar */}
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
