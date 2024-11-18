@@ -20,35 +20,43 @@ export default function ChatInterface() {
   ]);
   const [input, setInput] = useState("");
 
-  const scrollAreaRef = useRef<HTMLDivElement | null>(null); // Changed ref type to HTMLDivElement
-
-  const recognitionRef = useRef<typeof SpeechRecognition | null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
+  const recognitionRef = useRef< typeof SpeechRecognition | null>(null);
   const silenceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Ensure this runs only in the browser
-    if (typeof window !== "undefined" && window.SpeechRecognition) {
-      recognitionRef.current = new window.SpeechRecognition();
-      recognitionRef.current.lang = "en-US";
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
+    if (typeof window !== "undefined") {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
 
-      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
-        const transcript =
-          event.results[event.results.length - 1][0].transcript;
-        setInput(transcript);
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.continuous = true;
+        recognition.interimResults = true;
 
-        clearTimeout(silenceTimeoutRef.current!);
-        silenceTimeoutRef.current = setTimeout(() => {
-          handleSend(); // This is fine without adding `handleSend` to dependencies
-        }, 3000);
-      };
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
+          const transcript =
+            event.results[event.results.length - 1][0].transcript;
+          setInput(transcript);
 
-      recognitionRef.current.onerror = (event: Event) => {
-        console.error("Speech recognition error:", event);
-      };
+          clearTimeout(silenceTimeoutRef.current!);
+          silenceTimeoutRef.current = setTimeout(() => {
+            handleSend();
+          }, 3000);
+        };
+
+        // recognition.onerror = (event: error) => {
+        //   console.error("Speech recognition error:", event.error);
+        // };
+
+        recognitionRef.current = recognition;
+      } else {
+        console.error("SpeechRecognition API is not supported in this browser.");
+      }
     }
   }, []);
+
 
   const handleSend = useCallback(async () => {
     if (input.trim()) {
@@ -99,21 +107,29 @@ export default function ChatInterface() {
 
   const startSpeechRecognition = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (error) {
+        console.error("Failed to start speech recognition:", error);
+      }
+    } else {
+      console.error("SpeechRecognition is not initialized or unsupported.");
     }
   };
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
-  }, [messages]); // Automatically scroll to the bottom when messages change
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] bg-gray-800">
-      <div className="flex flex-1 flex-col lg:flex-row overflow-hidden">
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Replace SimpleBar with div */}
+      <div className="flex flex-col flex-1 overflow-hidden lg:flex-row">
+        <div className="flex flex-col flex-1 overflow-hidden">
           <div
             ref={scrollAreaRef}
             className="flex-1 p-4 space-y-4 overflow-auto bg-gray-800"
@@ -124,7 +140,9 @@ export default function ChatInterface() {
                 className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} mb-4`}
               >
                 <Card
-                  className={`max-w-[70%] ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-gray-700 text-white"}`}
+                  className={`max-w-[70%] ${
+                    message.role === "user" ? "bg-primary text-primary-foreground" : "bg-gray-700 text-white"
+                  }`}
                 >
                   <CardContent className="p-3">
                     <p>{message.content}</p>
@@ -133,28 +151,27 @@ export default function ChatInterface() {
               </div>
             ))}
           </div>
-
           <div className="p-4 bg-gray-800 border-t border-gray-700">
             <div className="flex items-center space-x-3">
               <Button
                 variant="outline"
                 onClick={startSpeechRecognition}
-                className="p-2 text-gray-500 hover:bg-gray-600 rounded-full"
+                className="p-2 text-gray-500 rounded-full hover:bg-gray-600"
               >
-                <Mic className="h-5 w-5" />
+                <Mic className="w-5 h-5" />
               </Button>
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 bg-gray-700 text-white"
+                className="flex-1 text-white bg-gray-700"
               />
               <Button
                 onClick={handleSend}
-                className="bg-primary text-white p-2 rounded-full"
+                className="p-2 text-white rounded-full bg-primary"
               >
-                <Send className="h-5 w-5" />
+                <Send className="w-5 h-5" />
               </Button>
             </div>
           </div>
