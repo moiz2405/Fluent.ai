@@ -88,7 +88,7 @@ const HeroSection: React.FC = () => {
             transition={{ delay: 1, duration: 0.5 }}
             className="flex items-center justify-center"
           >
-            <Link href="/chatbot">
+            <Link href="/prompt">
               <Card className="w-full max-w-md bg-card/80 backdrop-blur-sm shadow-xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <motion.div
