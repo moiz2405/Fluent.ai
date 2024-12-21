@@ -21,9 +21,8 @@ const Navbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((pr
   return (
     <nav
       ref={ref}
-      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-gray-800/70 backdrop-blur-md ${
-        isScrolled ? "shadow-md" : ""
-      }`}
+      className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 bg-[#202020] backdrop-blur-md ${isScrolled ? "shadow-md" : ""
+        }`}
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-4 py-2">
