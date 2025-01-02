@@ -77,7 +77,7 @@ const HeroSection: React.FC = () => {
                   >
                     <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
                       <Image
-                        src="/images/home/teacher?height=64&width=64"
+                        src="/images/home/teacher.png?height=64&width=64"
                         alt="AI Tutor"
                         width={64}
                         height={64}
