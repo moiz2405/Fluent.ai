@@ -16,6 +16,23 @@ nav {
    background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
   }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b6d7d; /* Light blue-gray thumb color */
+  border-radius: 4px; /* Rounded edges for the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2a2a2a; /* Track color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3b5976; /* Darker thumb color when hovered */
+}
 
 
 @layer base {
