@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const LoadingScreen: React.FC = () => {
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-64px)] bg-gradient-to-br from-blue-500 to-purple-600 relative">
+    <div className="flex items-center justify-center h-[calc(100vh-64px)] bg-gradient-to-br from-black to-blue-900 relative">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -21,15 +21,37 @@ const LoadingScreen: React.FC = () => {
           <div className="absolute inset-0 border-4 border-b-transparent border-white rounded-full animate-spin-reverse"></div>
         </motion.div>
 
-        {/* Stylish "Loading..." Text with animation */}
-        <motion.span
-          className="text-white text-4xl font-bold"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1 }}
+        {/* Multiple Texts with staggered appearance */}
+        <motion.div
+          className="flex flex-col items-center space-y-4"
         >
-          Loading...
-        </motion.span>
+          <motion.span
+            className="text-white text-4xl font-bold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            Waking Up the AI
+          </motion.span>
+
+          <motion.span
+            className="text-white text-3xl font-semibold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 1 }}
+          >
+            Fetching Your Lessons...
+          </motion.span>
+
+          <motion.span
+            className="text-white text-2xl font-medium"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, duration: 1 }}
+          >
+            Almost There...
+          </motion.span>
+        </motion.div>
       </motion.div>
 
       {/* Subtle Hover Effect on the entire screen */}

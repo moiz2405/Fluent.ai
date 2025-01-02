@@ -1,19 +1,19 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useRef, useEffect } from 'react';
 import Navbar from '../components/common/Navbar';
 
 interface NavbarWrapperProps {
-  children: React.ReactNode; // Declare children as a required prop
+  children: React.ReactNode;
 }
 
 const NavbarWrapper: React.FC<NavbarWrapperProps> = ({ children }) => {
-  const [navHeight, setNavHeight] = useState<number>(0);
   const navbarRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const updateNavHeight = () => {
       if (navbarRef.current) {
-        setNavHeight(navbarRef.current.offsetHeight);
+        // Do something with navbar height if needed
       }
     };
 
@@ -23,12 +23,12 @@ const NavbarWrapper: React.FC<NavbarWrapperProps> = ({ children }) => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
       {/* Navbar with a ref */}
       <Navbar ref={navbarRef} />
 
       {/* Content wrapper that will take the remaining space */}
-      <div style={{ flex: 1, paddingTop: `${navHeight}px`, overflowY: 'auto' }}>
+      <div className="flex-1 pt-16 overflow-y-auto">
         {/* Main content will now start below the navbar */}
         {children}
       </div>
